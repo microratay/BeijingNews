@@ -10,6 +10,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class splashActivity extends Activity {
     private RelativeLayout rl_splahs_root;
@@ -40,6 +41,27 @@ public class splashActivity extends Activity {
         set.addAnimation(sa);
 
         rl_splahs_root.startAnimation(set);
+        set.setAnimationListener(new MyAnimationListener());
+    }
+    class MyAnimationListener implements Animation.AnimationListener{
 
+        //当动画开始播放的时候回调这个方法
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        //当动画播放结束的时候回调这个方法
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            Toast.makeText(splashActivity.this,"动画播放完成了",Toast.LENGTH_SHORT).show();
+
+        }
+
+        //当动画重复播放的时候回调这个方法
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 }
