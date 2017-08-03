@@ -1,6 +1,7 @@
 package com.atguigu.beijingnews;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.icu.text.AlphabeticIndex;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,11 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.atguigu.activity.GuideActivity;
+import com.atguigu.utils.CacheUtils;
+
 public class splashActivity extends Activity {
+    public static final String START_MAIN = "start_main";
     private RelativeLayout rl_splahs_root;
 
     @Override
@@ -54,7 +59,17 @@ public class splashActivity extends Activity {
         //当动画播放结束的时候回调这个方法
         @Override
         public void onAnimationEnd(Animation animation) {
-            Toast.makeText(splashActivity.this,"动画播放完成了",Toast.LENGTH_SHORT).show();
+            boolean isStartMain = CacheUtils.getBoolean( splashActivity.this, START_MAIN );
+            if(isStartMain){
+                //如果进入过主页面,直接进入主页面
+            }else{
+                //如果没有进入过主页面,进入欢迎页面
+                Intent intent = new Intent( splashActivity.this,GuideActivity.class );
+                startActivity( intent );
+            }
+            //关闭splash界面
+            finish();
+            //Toast.makeText(splashActivity.this,"动画播放完成了",Toast.LENGTH_SHORT).show();
 
         }
 
