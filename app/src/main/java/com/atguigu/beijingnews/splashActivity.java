@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.atguigu.activity.GuideActivity;
+import com.atguigu.activity.MainActivity;
 import com.atguigu.utils.CacheUtils;
 
 public class splashActivity extends Activity {
@@ -60,13 +61,15 @@ public class splashActivity extends Activity {
         @Override
         public void onAnimationEnd(Animation animation) {
             boolean isStartMain = CacheUtils.getBoolean( splashActivity.this, START_MAIN );
+            Intent intent;
             if(isStartMain){
                 //如果进入过主页面,直接进入主页面
+                intent = new Intent( splashActivity.this,MainActivity.class );
             }else{
                 //如果没有进入过主页面,进入欢迎页面
-                Intent intent = new Intent( splashActivity.this,GuideActivity.class );
-                startActivity( intent );
+                intent = new Intent( splashActivity.this,GuideActivity.class );
             }
+            startActivity( intent );
             //关闭splash界面
             finish();
             //Toast.makeText(splashActivity.this,"动画播放完成了",Toast.LENGTH_SHORT).show();
