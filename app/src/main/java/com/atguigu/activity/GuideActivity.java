@@ -1,17 +1,21 @@
 package com.atguigu.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.atguigu.beijingnews.R;
+import com.atguigu.beijingnews.splashActivity;
+import com.atguigu.utils.CacheUtils;
 
 import java.util.ArrayList;
 
@@ -44,7 +48,59 @@ public class GuideActivity extends Activity {
 
         //设置ViewPager 适配器
         viewpager.setAdapter( new MyPagerAdapter());
+
+        viewpager.addOnPageChangeListener( new MyOnPageChangeListener() );
+        btn_start_main.setOnClickListener( new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                //1.保存曾经进入过主页面
+                CacheUtils.putBoolean(GuideActivity.this, splashActivity.START_MAIN,true);
+                //2.跳转到主页面
+                Intent intent = new Intent( GuideActivity.this,MainActivity.class );
+                //3.关闭引导页面
+                finish();
+            }
+        });
     }
+
+    class MyOnPageChangeListener implements ViewPager.OnPageChangeListener{
+        /**
+         * 当页面回调了会回调这个方法
+         * @param position 当前滑动页面的位置
+         * @param positionOffset 页面滑动的百分比
+         * @param positionOffsetPixels 滑动的像素
+         */
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        /**
+         * 当页面被选中的时候回调这个方法
+         * @param position 被选中页面的位置
+         */
+        @Override
+        public void onPageSelected(int position) {
+            if(position == imageViews.size()-1){
+                //最后一个页面
+                btn_start_main.setVisibility( View.VISIBLE );
+            }else{
+                //其他页面
+                btn_start_main.setVisibility( View.GONE );
+            }
+        }
+
+        /**
+         * 当ViewPager页面滑动状态发生变化的时候
+         * @param state
+         */
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
     class MyPagerAdapter extends PagerAdapter{
         //返回数据总个数
         @Override
